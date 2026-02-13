@@ -16,7 +16,7 @@ endif()
 target_link_libraries(unit_tests PRIVATE mylib ${_gtest_main_target})
 
 if(MSVC)
-	target_compile_options(unit_tests PRIVATE /experimental:module)
+    msvc_enable_std_module(unit_tests PUBLIC)
 endif()
 
 include(GoogleTest)

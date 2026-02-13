@@ -9,9 +9,8 @@ target_sources(mylib PUBLIC
 add_executable(app main.cpp)
 target_link_libraries(app PRIVATE mylib)
 
-msvc_enable_std_module(mylib PUBLIC)
 
 if(MSVC)
-    target_compile_options(app PRIVATE /experimental:module)
+    msvc_enable_std_module(mylib PUBLIC)
 endif()
 

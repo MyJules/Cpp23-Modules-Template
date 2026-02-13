@@ -1,7 +1,6 @@
 #include <gtest/gtest.h>
 
 import std;
-
 import mylib;
 
 TEST(MyLib, Add) {
