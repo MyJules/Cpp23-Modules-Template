@@ -1,5 +1,5 @@
 import std;
-import demo;
+import mylib;
 
 int main() {
     std::println("{}", greet("World"));

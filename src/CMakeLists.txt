@@ -1,17 +1,17 @@
-add_library(demo_lib)
-target_sources(demo_lib PUBLIC
+add_library(mylib)
+target_sources(mylib PUBLIC
     FILE_SET cxx_modules TYPE CXX_MODULES
     BASE_DIRS "${CMAKE_CURRENT_SOURCE_DIR}"
     FILES
-        demo.ixx
+        mylib.ixx
 )
 
-add_executable(import_std_demo main.cpp)
-target_link_libraries(import_std_demo PRIVATE demo_lib)
+add_executable(app main.cpp)
+target_link_libraries(app PRIVATE mylib)
 
-msvc_enable_std_module(demo_lib PUBLIC)
+msvc_enable_std_module(mylib PUBLIC)
 
 if(MSVC)
-    target_compile_options(import_std_demo PRIVATE /experimental:module)
+    target_compile_options(app PRIVATE /experimental:module)
 endif()
 

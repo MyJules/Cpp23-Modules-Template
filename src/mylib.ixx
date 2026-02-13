@@ -1,4 +1,4 @@
-export module demo;
+export module mylib;
 
 import std;
 

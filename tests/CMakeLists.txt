@@ -1,5 +1,5 @@
-add_executable(import_std_demo_tests
-	test_demo.cpp
+add_executable(unit_tests
+	test_mylib.cpp
 )
 
 set(_gtest_main_target "")
@@ -13,11 +13,11 @@ if(NOT _gtest_main_target)
 	message(FATAL_ERROR "Could not find gtest_main target (neither GTest::gtest_main nor gtest_main).")
 endif()
 
-target_link_libraries(import_std_demo_tests PRIVATE demo_lib ${_gtest_main_target})
+target_link_libraries(unit_tests PRIVATE mylib ${_gtest_main_target})
 
 if(MSVC)
-	target_compile_options(import_std_demo_tests PRIVATE /experimental:module)
+	target_compile_options(unit_tests PRIVATE /experimental:module)
 endif()
 
 include(GoogleTest)
-gtest_discover_tests(import_std_demo_tests)
+gtest_discover_tests(unit_tests)
