@@ -1,6 +1,11 @@
 import std;
 
 int main() {
-    std::print("Hello, World!\n");
+    std::println("Hello, {}", "World");
+
+    std::ranges::for_each(std::views::iota(0, 5), [](int i) {
+        std::println("Number: {}", i);
+    });
+
     return 0;
 }
