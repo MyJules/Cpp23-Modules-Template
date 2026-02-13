@@ -1,35 +1,33 @@
 cmake_minimum_required(VERSION 3.30)
 project(ImportStdDemo LANGUAGES CXX)
 
-add_executable(import_std_demo
-    src/main.cpp
-)
+set(CMAKE_CXX_STANDARD 23)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-target_compile_features(import_std_demo PRIVATE cxx_std_23)
+add_executable(import_std_demo src/main.cpp)
 
 if(MSVC)
-    target_compile_options(import_std_demo PRIVATE /std:c++latest /experimental:module)
+    target_compile_options(import_std_demo PRIVATE /experimental:module)
 
-    # Some MSVC installs ship the standard library module sources (std.ixx) but no prebuilt IFCs.
-    # In that case, compile the module interface unit as part of this target so `import std;` works.
-    get_filename_component(_cl_dir "${CMAKE_CXX_COMPILER}" DIRECTORY)        # .../bin/Hostx64/x64
-    get_filename_component(_host_dir "${_cl_dir}" DIRECTORY)                # .../bin/Hostx64
-    get_filename_component(_bin_dir "${_host_dir}" DIRECTORY)               # .../bin
-    get_filename_component(_msvc_root "${_bin_dir}" DIRECTORY)              # .../MSVC/<ver>
+    # Build MSVC's std module from the shipped .ixx files so `import std;` works.
+    set(_msvc_root "${CMAKE_CXX_COMPILER}")
+    foreach(_ IN ITEMS 1 2 3 4)
+        get_filename_component(_msvc_root "${_msvc_root}" DIRECTORY)
+    endforeach()
+
     set(_msvc_modules_dir "${_msvc_root}/modules")
-    set(_msvc_std_ixx "${_msvc_modules_dir}/std.ixx")
-    set(_msvc_std_compat_ixx "${_msvc_modules_dir}/std.compat.ixx")
-
-    if(EXISTS "${_msvc_std_ixx}")
-        set(_msvc_module_files "${_msvc_std_ixx}")
-        if(EXISTS "${_msvc_std_compat_ixx}")
-            list(APPEND _msvc_module_files "${_msvc_std_compat_ixx}")
+    set(_stl_modules "")
+    foreach(_f IN ITEMS std.ixx std.compat.ixx)
+        if(EXISTS "${_msvc_modules_dir}/${_f}")
+            list(APPEND _stl_modules "${_msvc_modules_dir}/${_f}")
         endif()
+    endforeach()
 
+    if(_stl_modules)
         target_sources(import_std_demo PRIVATE
             FILE_SET cxx_modules TYPE CXX_MODULES
             BASE_DIRS "${_msvc_modules_dir}"
-            FILES ${_msvc_module_files}
+            FILES ${_stl_modules}
         )
     endif()
 endif()
