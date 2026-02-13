@@ -10,7 +10,4 @@ add_executable(app main.cpp)
 target_link_libraries(app PRIVATE mylib)
 
 
-if(MSVC)
-    msvc_enable_std_module(mylib PUBLIC)
-endif()
-
+msvc_enable_std_module(mylib PUBLIC)
