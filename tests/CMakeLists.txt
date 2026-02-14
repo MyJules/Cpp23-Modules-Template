@@ -15,6 +15,7 @@ endif()
 
 target_link_libraries(unit_tests PRIVATE mylib ${_gtest_main_target})
 
+clang_enable_std_module(unit_tests)
 msvc_enable_std_module(unit_tests PUBLIC)
 
 include(GoogleTest)
