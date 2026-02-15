@@ -29,7 +29,7 @@ if(BUILD_TESTING)
 		FetchContent_Declare(
 			googletest
 			SOURCE_DIR ${CMAKE_CURRENT_LIST_DIR}/vendor/googletest
-			URL https://github.com/google/googletest/archive/refs/tags/v1.14.0.zip
+			# URL https://github.com/google/googletest/archive/refs/tags/v1.14.0.zip
 		)
 		FetchContent_MakeAvailable(googletest)
 	endif()
