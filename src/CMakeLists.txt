@@ -9,5 +9,4 @@ target_sources(mylib PUBLIC
 add_executable(app main.cpp)
 target_link_libraries(app PRIVATE mylib)
 
-msvc_enable_std_module(mylib PUBLIC)
-clang_enable_std_module(mylib)
+enable_std_module(mylib PUBLIC)
