@@ -1,4 +1,4 @@
-add_library(mylib)
+add_library(mylib STATIC)
 target_sources(mylib PUBLIC
     FILE_SET cxx_modules TYPE CXX_MODULES
     BASE_DIRS "${CMAKE_CURRENT_SOURCE_DIR}"
