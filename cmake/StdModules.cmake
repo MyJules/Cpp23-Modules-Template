@@ -1,3 +1,40 @@
+#[[
+enable_std_module(<target> [<scope>])
+
+Purpose
+	Makes C++23 `import std;` work with CMake's modules support by adding the
+	compiler/vendor-provided standard library module interface units to a target.
+
+Arguments
+	<target>
+		CMake target name to modify.
+	<scope>
+		Optional: one of PRIVATE / PUBLIC / INTERFACE (defaults to PRIVATE).
+		Use PUBLIC if consumers of the target also need the same std-module setup.
+
+Behavior
+	- MSVC:
+			* Enables modules with /experimental:module.
+			* Adds MSVC's shipped STL module units (std.ixx, std.compat.ixx) from the
+				compiler's "modules" directory via a CXX_MODULES FILE_SET.
+
+	- Clang (non-clang-cl):
+			* Requires libc++ module units (std.cppm, optionally std.compat.cppm).
+			* Adds -stdlib=libc++ and -fexperimental-library to compile options, and
+				-stdlib=libc++ to link options, to match the produced BMIs.
+			* Adds libc++'s module units via a CXX_MODULES FILE_SET.
+			* Errors at configure-time if std.cppm cannot be found.
+
+Notes
+	- This function is a no-op for other compilers.
+	- Clang path hints are geared toward typical LLVM/libc++ installs on Linux.
+
+Example
+	add_library(mylib)
+	# ... add your own module interface units ...
+	enable_std_module(mylib PUBLIC)
+]]
+
 function(enable_std_module target_name)
 	set(_scope PRIVATE)
 	if(ARGC GREATER 1)
