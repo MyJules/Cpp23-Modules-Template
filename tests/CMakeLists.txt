@@ -1,3 +1,19 @@
+include(FetchContent)
+
+find_package(GTest CONFIG QUIET)
+if(NOT GTest_FOUND)
+	if(MSVC)
+		set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
+	endif()
+
+	FetchContent_Declare(
+		googletest
+		SOURCE_DIR ${PROJECT_SOURCE_DIR}/vendor/googletest
+		# URL https://github.com/google/googletest/archive/refs/tags/v1.14.0.zip
+	)
+	FetchContent_MakeAvailable(googletest)
+endif()
+
 add_executable(unit_tests
 	test_mylib.cpp
 )
