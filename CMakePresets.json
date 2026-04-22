@@ -7,11 +7,11 @@
   },
   "configurePresets": [
     {
-      "name": "default",
-      "displayName": "Default (Ninja)",
-      "description": "Configure the project with the Ninja generator and MSVC on Windows.",
+      "name": "base",
+      "displayName": "Base (Ninja)",
+      "description": "Base preset for configuring the project with the Ninja generator and MSVC on Windows.",
       "generator": "Ninja",
-      "binaryDir": "${sourceDir}/build/ninja",
+      "binaryDir": "${sourceDir}/build/${presetName}",
       "architecture": {
         "value": "x64",
         "strategy": "external"
@@ -36,18 +36,67 @@
           "intelliSenseMode": "windows-msvc-x64"
         }
       }
+    },
+    {
+      "name": "debug",
+      "displayName": "Debug (Ninja)",
+      "description": "Configure a Debug build with Ninja and MSVC.",
+      "inherits": "base",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Debug"
+      }
+    },
+    {
+      "name": "release",
+      "displayName": "Release (Ninja)",
+      "description": "Configure a Release build with Ninja and MSVC.",
+      "inherits": "base",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Release"
+      }
+    },
+    {
+      "name": "minsizerel",
+      "displayName": "MinSizeRel (Ninja)",
+      "description": "Configure a MinSizeRel build with Ninja and MSVC.",
+      "inherits": "base",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "MinSizeRel"
+      }
     }
   ],
   "buildPresets": [
     {
-      "name": "default",
-      "configurePreset": "default"
+      "name": "debug",
+      "configurePreset": "debug"
+    },
+    {
+      "name": "release",
+      "configurePreset": "release"
+    },
+    {
+      "name": "minsizerel",
+      "configurePreset": "minsizerel"
     }
   ],
   "testPresets": [
     {
-      "name": "default",
-      "configurePreset": "default",
+      "name": "debug",
+      "configurePreset": "debug",
+      "output": {
+        "outputOnFailure": true
+      }
+    },
+    {
+      "name": "release",
+      "configurePreset": "release",
+      "output": {
+        "outputOnFailure": true
+      }
+    },
+    {
+      "name": "minsizerel",
+      "configurePreset": "minsizerel",
       "output": {
         "outputOnFailure": true
       }
