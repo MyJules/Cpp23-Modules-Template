@@ -15,7 +15,7 @@ if(NOT GTest_FOUND)
 endif()
 
 add_executable(unit_tests
-	test_mylib.cpp
+	test_args.cpp
 )
 
 set(_gtest_main_target "")

@@ -1,13 +1,10 @@
 import std;
-import mylib;
+import args;
 
-int main() {
-    std::println("{}", mylib::greet("World"));
-    std::println("2 + 3 = {}", mylib::add(2, 3));
+int main(int argc, const char** argv) {
+    auto args = args::to_span_view(argc, argv);
 
-    std::ranges::for_each(std::views::iota(0, 5), [](int i) {
-        std::println("Number: {}", i);
-    });
+    std::println("{}", args);
 
     return 0;
 }
