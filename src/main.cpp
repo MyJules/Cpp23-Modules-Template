@@ -1,7 +1,7 @@
 import std;
 import args;
 
-int main(int argc, const char** argv) {
+int main(int argc, const char* argv[]) {
     const auto args = args::to_span(argc, argv);
 
     std::println("{}", args);
